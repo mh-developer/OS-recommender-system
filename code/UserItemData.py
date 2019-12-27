@@ -23,13 +23,22 @@ class UserItemData:
         elif self.to_date is not None:
             return pd.read_csv(self.path, sep="\t", encoding="ISO-8859-1")
 
-        return pd.read_csv(self.path, sep="\t", encoding="ISO-8859-1")
+        data = pd.read_csv(self.path, sep="\t", encoding="ISO-8859-1")
+        data = data.set_index("userID", drop=False)
+        return data
 
     def nratings(self):
+        print()
         return self.df.shape[0]
+
+    def get_user(self, user_id):
+        return self.df.loc[user_id]
 
     def head(self):
         return self.df.head()
+
+    def get_key(self):
+        return self.df.keys()
 
     def get_df(self):
         return self.df
