@@ -23,5 +23,6 @@ class Recommender:
 
         return sorted(list(pred.items()), key=lambda x: x[1], reverse=True)[0:n]
 
-
+    def evaluate(self, test_data, n):
+        pass
 
