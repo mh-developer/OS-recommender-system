@@ -12,10 +12,4 @@ class ViewsPredictor:
         self.uim = X.get_df()
 
     def predict(self, user_id):
-        pred = {}
-
-        for key, movie in self.md.iterrows():
-            if movie["id"] not in pred:
-                pred[movie["id"]] = len(self.uim.loc[self.uim["movieID"] == movie["id"]])
-
-        return pred
+        return dict(self.uim.groupby("movieID").count()["rating"])
