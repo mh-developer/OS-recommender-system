@@ -2,14 +2,14 @@ import pandas as pd
 import datetime
 datetime.datetime.strptime
 
+
 class UserItemData:
     def __init__(self, path, start_date=None, end_date=None, min_ratings=0):
         self.path = path
         self.from_date = start_date
         self.to_date = end_date
         self.min_ratings = min_ratings
-        self.df = self.read_data()
-        self.movies = self.read_data()
+        self.df = self.movies = self.read_data()
 
     def read_data(self):
         data = pd.read_csv(self.path, sep="\t", encoding="ISO-8859-1")
