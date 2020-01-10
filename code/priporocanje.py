@@ -105,16 +105,19 @@ for idmovie, val in rec_items:
 
 
 # Napovedovanje z metodo Slope one
-# md = MovieData('../data/movies.dat')
-# uim = UserItemData('../data/user_ratedmovies.dat', min_ratings=1000)
-# rp = SlopeOnePredictor()
-# rec = Recommender(rp)
-# rec.fit(uim)
-#
-# print("Predictions for 78: ")
-# rec_items = rec.recommend(78, n=15, rec_seen=False)
-# for idmovie, val in rec_items:
-#     print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+print("------------------------------")
+print("Napovedovanje z metodo Slope one")
+print("------------------------------")
+md = MovieData('../data/movies.dat')
+uim = UserItemData('../data/user_ratedmovies.dat', min_ratings=1000)
+rp = SlopeOnePredictor()
+rec = Recommender(rp)
+rec.fit(uim)
+
+print("Predictions for 78: ")
+rec_items = rec.recommend(78, n=15, rec_seen=False)
+for idmovie, val in rec_items:
+    print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
 
 
 
