@@ -33,6 +33,7 @@ class Recommender:
         predictions = pd.DataFrame(data["userID"].unique(), columns=["userID"])
         predictions["predict"] = predictions.apply(lambda x: list(self.predictor.predict(x["userID"]).items()), axis=1)
         predictions["count"] = predictions.apply(lambda x: len(x["predict"]), axis=1)
+        # print(data.loc[data["userID"] == 493])
         predictions["mae"] = predictions.apply(lambda x: self.calculate_mae(x["predict"], data.loc[data["userID"] == x["userID"]]), axis=1)
         # for key, value in predictions.iterrows():
         #     print(self.predictor.predict(value["userID"]))
@@ -46,15 +47,21 @@ class Recommender:
         movies = dict(movies)
         if not movies:
             return 0.0
-
-        if not real_ratings.bool():
+        print(real_ratings)
+        if real_ratings.empty:
             return 0.0
 
         print(movies)
-        print(real_ratings)
         r = []
         for k, v in movies.items():
-            ocena = real_ratings.loc[real_ratings["movieID"] == k, "rating"].iat[0]
-            print(ocena)
-            r += abs(ocena - v)
+            if k in real_ratings["movieID"].values:
+                ocena = real_ratings.loc[real_ratings["movieID"] == k]["rating"].to_numpy()
+
+                print(k, v)
+                if ocena is None or ocena.size == 0:
+                    continue
+                print(ocena[0], v)
+                r += [abs(ocena[0] - v)]
+        print(r)
+
         return np.sum(np.array(r))
