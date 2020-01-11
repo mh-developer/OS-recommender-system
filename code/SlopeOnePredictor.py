@@ -26,6 +26,9 @@ class SlopeOnePredictor:
 
         user_movies = dict(self.uim.groupby(self.uim.index)['movieID'].apply(list))
 
+        if user_id not in user_movies.keys():
+            return pred
+
         rating_movies_from_user = pd.DataFrame({'rated_movies': user_movies[user_id]})
 
         non_rating_movies = self.uim[~self.uim["movieID"].isin(user_movies[user_id])].drop_duplicates(subset=["movieID"])
@@ -62,8 +65,3 @@ class SlopeOnePredictor:
 
         return tuple((-(concated_movies_rating["calculated_d"].sum() / concated_movies_rating["calculated_d"].count()),
                      concated_movies_rating["calculated_d"].count()))
-
-
-
-
-
