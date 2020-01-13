@@ -95,15 +95,15 @@ To smo izračunali z merami MAE, RMSE, priklic, natančnost, F1.
 ## Dobljeni rezultati
 
 <p align="center">
-    <img src="images/random_predictor.png" />
-    <img src="images/avg_predictor.png" />
-    <img src="images/najboljgledani.png" />
-    <img src="images/itembase_napovedovanje.png" />
-    <img src="images/najbolj_podobni.png" />
-    <img src="images/najbolj_podobni.png" />
-    <img src="images/najbolj_podobni.png" />
-    <img src="images/glede_na_trenutno_gledano.png" />
-    <img src="images/priporocilo_zase.png" />
-    <img src="images/napovedovanje_slopeone.png" />
-    <img src="images/evalvacija.png" />
+    <img src="images/random_predictor.png" width="100%" />
+    <img src="images/avg_predictor.png" width="100%" />
+    <img src="images/najboljgledani.png" width="100%" />
+    <img src="images/itembase_napovedovanje.png" width="100%" />
+    <img src="images/najbolj_podobni.png" width="100%" />
+    <img src="images/najbolj_podobni.png" width="100%" />
+    <img src="images/najbolj_podobni.png" width="100%" />
+    <img src="images/glede_na_trenutno_gledano.png" width="100%" />
+    <img src="images/priporocilo_zase.png" width="100%" />
+    <img src="images/napovedovanje_slopeone.png" width="100%" />
+    <img src="images/evalvacija.png" width="100%" />
 </p>
