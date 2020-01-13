@@ -7,6 +7,9 @@ from code.SlopeOnePredictor import SlopeOnePredictor
 from code.UserItemData import UserItemData
 from code.ViewsPredictor import ViewsPredictor
 import pandas as pd
+import time
+
+start = time.time()
 
 md = MovieData('../data/movies.dat')
 uim = UserItemData('../data/user_ratedmovies.dat')
@@ -164,3 +167,6 @@ rec.fit(uim)
 uim_test = UserItemData('../data/user_ratedmovies.dat', min_ratings=200, start_date='2.1.2008')
 mse, mae, precision, recall, f = rec.evaluate(uim_test, 20)
 print(mse, mae, precision, recall, f)
+
+end = time.time()
+print("Čas izvajanja programa: ", end - start)

@@ -28,40 +28,45 @@ class Recommender:
     def evaluate(self, test_data, n):
         print("Računanje evaluate")
         data = test_data.get_df()
-        print(data)
-        start = time.time()
+
+        # start = time.time()
+
         predictions = pd.DataFrame(data["userID"].unique(), columns=["userID"])
         predictions["predict"] = predictions.apply(lambda x: list(self.predictor.predict(x["userID"]).items()), axis=1)
-        predictions["count"] = predictions.apply(lambda x: len(x["predict"]), axis=1)
         # print(data.loc[data["userID"] == 493])
         predictions["mae"] = predictions.apply(lambda x: self.calculate_mae(x["predict"], data.loc[data["userID"] == x["userID"]]), axis=1)
+        predictions["mae_value"] = predictions.apply(lambda x: x["mae"][0], axis=1)
+        predictions["rmse_value"] = predictions.apply(lambda x: x["mae"][1], axis=1)
+        predictions["count"] = predictions.apply(lambda x: x["mae"][2], axis=1)
         # for key, value in predictions.iterrows():
         #     print(self.predictor.predict(value["userID"]))
-        print(predictions)
-        end = time.time()
-        print(end - start)
+        # end = time.time()
+        # print(end - start)
+        # print(predictions)
 
-        return predictions["mae"].sum() / predictions["count"].sum(), 0, 0, 0, 0
+        # return np.array(predictions["mae"].tolist())[:, 1].sum() / np.array(predictions["mae"].tolist())[:, 1].sum(), 0, 0, 0, 0
+        return np.sqrt(predictions["rmse_value"].sum() / predictions["count"].sum()), predictions["mae_value"].sum() / predictions["count"].sum(), 0, 0, 0
 
     def calculate_mae(self, movies, real_ratings):
         movies = dict(movies)
         if not movies:
-            return 0.0
-        print(real_ratings)
+            return 0, 0, 0
+        # print(real_ratings)
         if real_ratings.empty:
-            return 0.0
+            return 0, 0, 0
 
-        print(movies)
+        # print(movies)
         r = []
+        rmse = []
         for k, v in movies.items():
             if k in real_ratings["movieID"].values:
                 ocena = real_ratings.loc[real_ratings["movieID"] == k]["rating"].to_numpy()
 
-                print(k, v)
+                # print(k, v)
                 if ocena is None or ocena.size == 0:
                     continue
-                print(ocena[0], v)
+                # print(ocena[0], v)
                 r += [abs(ocena[0] - v)]
-        print(r)
-
-        return np.sum(np.array(r))
+                rmse += [(ocena[0] - v)**2]
+        # print(r)
+        return np.sum(np.array(r)), np.sum(np.array(rmse)), len(r)
